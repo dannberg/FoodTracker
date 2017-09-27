@@ -42,9 +42,13 @@
                                     </button>
                                     <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="defaultPhoto" translatesAutoresizingMaskIntoConstraints="NO" id="QwJ-yM-erx">
                                         <rect key="frame" x="0.0" y="104.5" width="320" height="320"/>
+                                        <gestureRecognizers/>
                                         <constraints>
                                             <constraint firstAttribute="width" secondItem="QwJ-yM-erx" secondAttribute="height" multiplier="1:1" id="LAu-DA-6AK"/>
                                         </constraints>
+                                        <connections>
+                                            <outletCollection property="gestureRecognizers" destination="keF-lG-hJl" appends="YES" id="ifa-1o-W0u"/>
+                                        </connections>
                                     </imageView>
                                 </subviews>
                                 <constraints>
@@ -63,9 +67,15 @@
                     <connections>
                         <outlet property="mealNameLabel" destination="Vbc-Yp-X51" id="CsB-GO-vlm"/>
                         <outlet property="nameTextField" destination="FXL-At-SXz" id="Ed1-v4-GVA"/>
+                        <outlet property="photoImageView" destination="QwJ-yM-erx" id="Peg-wV-PLl"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="dkx-z0-nzr" sceneMemberID="firstResponder"/>
+                <tapGestureRecognizer id="keF-lG-hJl">
+                    <connections>
+                        <action selector="selectImageFromPhotoLibrary:" destination="BYZ-38-t0r" id="dA9-ji-UKU"/>
+                    </connections>
+                </tapGestureRecognizer>
             </objects>
             <point key="canvasLocation" x="-79.200000000000003" y="133.5832083958021"/>
         </scene>
