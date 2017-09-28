@@ -8,8 +8,24 @@
 
 import UIKit
 
-class RatingControl: UIStackView {
-
+@IBDesignable class RatingControl: UIStackView {
+    
+    //MARK: Properties
+    @IBInspectable var starSize: CGSize = CGSize(width: 44.0, height: 44.0) {
+        didSet {
+            setupButtons()
+        }
+    }
+    @IBInspectable var starCount: Int = 5 {
+        didSet {
+            setupButtons()
+        }
+    }
+    
+    private var ratingButtons = [UIButton]()
+    
+    var rating = 0
+    
     //MARK: Initialization
     
     override init(frame: CGRect) {
@@ -22,20 +38,37 @@ class RatingControl: UIStackView {
         setupButtons()
     }
     
+    //MARK: Button Actions
+    
+    @objc func ratingButtonTapped(button: UIButton) {
+        print ("Rating button tapped")
+    }
+    
     //MARK: Private Methods
     
     private func setupButtons() {
-        let button = UIButton()
-        button.backgroundColor = UIColor.red
+        for button in ratingButtons {
+            removeArrangedSubview(button)
+            button.removeFromSuperview()
+        }
+        ratingButtons.removeAll()
         
-        // Add constraints
-        button.translatesAutoresizingMaskIntoConstraints = false
-        button.heightAnchor.constraint(equalToConstant: 44.0).isActive = true
-        button.widthAnchor.constraint(equalToConstant: 44.0).isActive = true
-        
-        // Add button to stack
-        addArrangedSubview(button)
-        
+        for _ in 0..<starCount {
+            let button = UIButton()
+            button.backgroundColor = UIColor.red
+            
+            // Add constraints
+            button.translatesAutoresizingMaskIntoConstraints = false
+            button.heightAnchor.constraint(equalToConstant: starSize.height).isActive = true
+            button.widthAnchor.constraint(equalToConstant: starSize.width).isActive = true
+            
+            // Button actions
+            button.addTarget(self, action: #selector(RatingControl.ratingButtonTapped(button:)), for: .touchUpInside)
+            
+            // Add button to stack and rating button array
+            addArrangedSubview(button)
+            ratingButtons.append(button)
+        }
     }
-
+    
 }
