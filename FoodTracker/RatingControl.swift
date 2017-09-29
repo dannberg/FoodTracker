@@ -24,7 +24,11 @@ import UIKit
     
     private var ratingButtons = [UIButton]()
     
-    var rating = 0
+    var rating = 0 {
+        didSet {
+            updateButtonSelectionStates()
+        }
+    }
     
     //MARK: Initialization
     
@@ -41,7 +45,15 @@ import UIKit
     //MARK: Button Actions
     
     @objc func ratingButtonTapped(button: UIButton) {
-        print ("Rating button tapped")
+        guard let index = ratingButtons.index(of: button) else {
+            fatalError("Button: \(button) selected was not in the ratingButtons array: \(ratingButtons)")
+        }
+        let selectedRating = index + 1
+        if selectedRating == rating {
+            rating = 0
+        } else {
+            rating = selectedRating
+        }
     }
     
     //MARK: Private Methods
@@ -76,6 +88,14 @@ import UIKit
             // Add button to stack and rating button array
             addArrangedSubview(button)
             ratingButtons.append(button)
+        }
+        updateButtonSelectionStates()
+    }
+    
+    private func updateButtonSelectionStates() {
+        for (index, button) in ratingButtons.enumerated() {
+            // If the index is less than the rating, that button should be selected
+            button.isSelected = index < rating
         }
     }
     
